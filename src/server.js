@@ -18,14 +18,6 @@ configViewEngine(app);
 // Initializing routes
 app.use("/", webRoutes);
 
-connection.query("SELECT * FROM Users u", function (err, results, fields) {
-	if (err) {
-		console.error("Query Error:", err);
-		return;
-	}
-	// console.log("> Result", results);
-});
-
 app.listen(port, hostname, () => {
 	console.log(`Example app listening on port ${port}`);
 });
