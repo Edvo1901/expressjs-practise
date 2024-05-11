@@ -9,6 +9,10 @@ const app = express();
 const port = process.env.PORT || 8080;
 const hostname = process.env.HOST_NAME;
 
+// Config request body
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
 configViewEngine(app);
 
 // Initializing routes
@@ -19,7 +23,7 @@ connection.query("SELECT * FROM Users u", function (err, results, fields) {
 		console.error("Query Error:", err);
 		return;
 	}
-	console.log("> Result", results);
+	// console.log("> Result", results);
 });
 
 app.listen(port, hostname, () => {
