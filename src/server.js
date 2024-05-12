@@ -2,7 +2,7 @@ const express = require("express");
 const configViewEngine = require("./config/viewEngine");
 const webRoutes = require("./routes/web");
 const connection = require("./config/database");
-const mongoose = require("mongoose");
+const Kitten = require("./models/Kitten");
 
 require("dotenv").config();
 
@@ -19,12 +19,7 @@ configViewEngine(app);
 // Initializing routes
 app.use("/", webRoutes);
 
-const kittySchema = new mongoose.Schema({
-	name: String,
-});
-
-const Kitten = mongoose.model("Kitten", kittySchema);
-const cat = new Kitten({ name: "Maybe" });
+const cat = new Kitten({ name: "Maybe model" });
 cat.save();
 
 // Test db connection
