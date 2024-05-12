@@ -18,6 +18,9 @@ configViewEngine(app);
 // Initializing routes
 app.use("/", webRoutes);
 
+// Test db connection
+connection();
+
 app.listen(port, hostname, () => {
 	console.log(`Example app listening on port ${port}`);
 });
