@@ -22,10 +22,10 @@
                 <th>City</th>
                 <th>Action</th>
             </tr>
-            <% listUsers.forEach(function(user) { %>
+            <% listUsers.forEach(function(user, index) { %>
                 <tr>
                     <td>
-                        <%= user.id %>
+                        <%= index + 1 %>
                     </td>
                     <td>
                         <%= user.email %>
