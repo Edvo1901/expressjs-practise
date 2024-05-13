@@ -1,6 +1,7 @@
 const express = require("express");
 const configViewEngine = require("./config/viewEngine");
 const webRoutes = require("./routes/web");
+const webRoutesAPI = require("./routes/api");
 const connection = require("./config/database");
 
 require("dotenv").config();
@@ -17,9 +18,7 @@ configViewEngine(app);
 
 // Initializing routes
 app.use("/", webRoutes);
-
-// const cat = new Kitten({ name: "Maybe model" });
-// cat.save();
+app.use("/v1/api/", webRoutesAPI);
 
 // Test db connection
 (async () => {
