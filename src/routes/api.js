@@ -1,9 +1,10 @@
 const express = require("express");
 const routerAPI = express.Router();
-const { getUsersAPI, postCreateUserAPI } = require("../controllers/apiController");
+const { getUsersAPI, postCreateUserAPI, putUpdateUserAPI } = require("../controllers/apiController");
 const router = require("./web");
 
 routerAPI.get("/users", getUsersAPI);
 routerAPI.post("/users", postCreateUserAPI);
+routerAPI.put("/users", putUpdateUserAPI)
 
 module.exports = routerAPI;

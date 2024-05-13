@@ -2,10 +2,10 @@ const User = require("../models/user");
 
 const getUsersAPI = async (req, res) => {
 	const results = await User.find({});
-    return res.status(200).json({
-        EC: 0,
-        data: results
-    })
+	return res.status(200).json({
+		EC: 0,
+		data: results,
+	});
 };
 
 const postCreateUserAPI = async (req, res) => {
@@ -18,12 +18,26 @@ const postCreateUserAPI = async (req, res) => {
 	});
 
 	return res.status(200).json({
-        EC: 0,
-        data: user
-    })
+		EC: 0,
+		data: user,
+	});
+};
+
+const putUpdateUserAPI = async (req, res) => {
+	const { userId, email, name, city } = req.body;
+	const user = await User.updateOne(
+		{ _id: userId },
+		{ email: email, name: name, city: city }
+	);
+
+	return res.status(200).json({
+		EC: 0,
+		data: user,
+	});
 };
 
 module.exports = {
-    getUsersAPI,
-    postCreateUserAPI
-}
+	getUsersAPI,
+	postCreateUserAPI,
+	putUpdateUserAPI,
+};
