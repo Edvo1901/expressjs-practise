@@ -9,12 +9,23 @@ const {
 	postUploadMultipleFilesAPI,
 } = require("../controllers/apiController");
 
+const {
+	postCreateCustomerAPI,
+	postCreateMultipleCustomersAPI,
+} = require("../controllers/customerController");
+
+// User router
 routerAPI.get("/users", getUsersAPI);
 routerAPI.post("/users", postCreateUserAPI);
 routerAPI.put("/users", putUpdateUserAPI);
 routerAPI.delete("/users", deleteUserAPI);
 
+// File router
 routerAPI.post("/file", postUploadSingleFileAPI);
 routerAPI.post("/files", postUploadMultipleFilesAPI);
+
+// Customer router
+routerAPI.post("/customers", postCreateCustomerAPI);
+routerAPI.post("/customers-many", postCreateMultipleCustomersAPI);
 
 module.exports = routerAPI;
