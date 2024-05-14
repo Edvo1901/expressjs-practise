@@ -39,8 +39,48 @@ const getAllCustomersService = async () => {
 	}
 };
 
+const putUpdateCustomerService = async (userData) => {
+	try {
+		const { _id, email, name, address } = userData;
+		const result = await Customer.updateOne(
+			{ _id: _id },
+			{ email: email, name: name, address: address }
+		);
+		return result;
+	} catch (err) {
+		console.log(err);
+		return null;
+	}
+};
+
+const deleteCustomerService = async (userData) => {
+	try {
+		const { _id } = userData;
+		const result = await Customer.deleteById(_id);
+		return result;
+	} catch (err) {
+		console.log(err);
+		return null;
+	}
+};
+
+const deleteMultipleCustomersService = async (listOfUsers) => {
+	try {
+		const result = await Customer.delete({
+			_id: { $in: listOfUsers.customerId },
+		});
+		return result;
+	} catch (err) {
+		console.log(err);
+		return null;
+	}
+};
+
 module.exports = {
 	createCustomerService,
 	createMultipleCustomersService,
-    getAllCustomersService
+	getAllCustomersService,
+	putUpdateCustomerService,
+	deleteCustomerService,
+	deleteMultipleCustomersService,
 };

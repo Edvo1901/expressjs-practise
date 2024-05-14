@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongooseDelete = require("mongoose-delete");
 
 const customerSchema = new mongoose.Schema(
 	{
@@ -12,8 +13,15 @@ const customerSchema = new mongoose.Schema(
 		image: String,
 		description: String,
 	},
-	{ timestamps: true }
+	{
+		timestamps: true,
+		statics: {
+			
+		}
+	}
 );
+
+customerSchema.plugin(mongooseDelete, { overrideMethods: "all" });
 
 const Customer = mongoose.model("Customer", customerSchema);
 module.exports = Customer;

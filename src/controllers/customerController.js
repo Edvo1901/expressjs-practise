@@ -5,7 +5,10 @@ const {
 const {
 	createCustomerService,
 	createMultipleCustomersService,
-    getAllCustomersService
+	getAllCustomersService,
+	putUpdateCustomerService,
+	deleteCustomerService,
+    deleteMultipleCustomersService
 } = require("../services/customerService");
 
 const postCreateCustomerAPI = async (req, res) => {
@@ -51,6 +54,38 @@ const postCreateMultipleCustomersAPI = async (req, res) => {
 const getAllCustomersAPI = async (req, res) => {
 	const customers = await getAllCustomersService();
 
+	if (customers) {
+		return res.status(200).json({
+			EC: 0,
+			data: customers,
+		});
+	} else {
+		return res.status(500).json({
+			EC: -1,
+			data: customers,
+		});
+	}
+};
+
+const putUpdateCustomerAPI = async (req, res) => {
+	const customers = await putUpdateCustomerService(req.body);
+
+	if (customers) {
+		return res.status(200).json({
+			EC: 0,
+			data: customers,
+		});
+	} else {
+		return res.status(500).json({
+			EC: -1,
+			data: customers,
+		});
+	}
+};
+
+const deleteCustomerAPI = async (req, res) => {
+	const customers = await deleteCustomerService(req.body);
+
     if (customers) {
 		return res.status(200).json({
 			EC: 0,
@@ -64,8 +99,27 @@ const getAllCustomersAPI = async (req, res) => {
 	}
 };
 
+const deleteMultipleCustomersAPI = async (req, res) => {
+    const customers = await deleteMultipleCustomersService(req.body)
+
+    if (customers) {
+		return res.status(200).json({
+			EC: 0,
+			data: customers,
+		});
+	} else {
+		return res.status(500).json({
+			EC: -1,
+			data: customers,
+		});
+	}
+}
+
 module.exports = {
 	postCreateCustomerAPI,
 	postCreateMultipleCustomersAPI,
 	getAllCustomersAPI,
+	putUpdateCustomerAPI,
+	deleteCustomerAPI,
+    deleteMultipleCustomersAPI
 };
