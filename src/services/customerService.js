@@ -29,9 +29,17 @@ const createMultipleCustomersService = async (customerData) => {
 	}
 };
 
-const getAllCustomersService = async () => {
+const getAllCustomersService = async (limit, page) => {
 	try {
-		const result = await Customer.find({});
+		let result = null;
+
+		if (limit && page) {
+			const offset = (page - 1) * limit;
+			result = await Customer.find({}).skip(offset).limit(limit).exec();
+		} else {
+			result = await Customer.find({});
+		}
+
 		return result;
 	} catch (err) {
 		console.log(err);
