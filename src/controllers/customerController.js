@@ -11,6 +11,7 @@ const {
 	deleteMultipleCustomersService,
 } = require("../services/customerService");
 
+
 const postCreateCustomerAPI = async (req, res) => {
 	const { name, address, phone, email, image, description } = req.body;
 	let imageURL = "";
@@ -52,29 +53,29 @@ const postCreateMultipleCustomersAPI = async (req, res) => {
 };
 
 const getAllCustomersAPI = async (req, res) => {
-	const { limit, page } = req.query;
-    let customers = null;
+	const { limit, page, name } = req.query;
+	let customers = null;
 
-    if (limit && page) {
-        customers = await getAllCustomersService(limit, page);
-        return res.status(200).json({
-            EC: 0,
-            data: customers,
-        });
-    } else {
-        customers = await getAllCustomersService();
-        if (customers) {
-            return res.status(200).json({
-                EC: 0,
-                data: customers,
-            });
-        } else {
-            return res.status(500).json({
-                EC: -1,
-                data: customers,
-            });
-        }
-    }
+	if (limit && page) {
+		customers = await getAllCustomersService(limit, page, name, req.query);
+		return res.status(200).json({
+			EC: 0,
+			data: customers,
+		});
+	} else {
+		customers = await getAllCustomersService();
+		if (customers) {
+			return res.status(200).json({
+				EC: 0,
+				data: customers,
+			});
+		} else {
+			return res.status(500).json({
+				EC: -1,
+				data: customers,
+			});
+		}
+	}
 };
 
 const putUpdateCustomerAPI = async (req, res) => {
