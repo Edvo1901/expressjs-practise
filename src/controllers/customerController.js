@@ -2,7 +2,11 @@ const {
 	uploadSingleFile,
 	uploadMultipleFiles,
 } = require("../services/fileService");
-const { createCustomerService, createMultipleCustomersService } = require("../services/customerService");
+const {
+	createCustomerService,
+	createMultipleCustomersService,
+    getAllCustomersService
+} = require("../services/customerService");
 
 const postCreateCustomerAPI = async (req, res) => {
 	const { name, address, phone, email, image, description } = req.body;
@@ -30,22 +34,38 @@ const postCreateCustomerAPI = async (req, res) => {
 };
 
 const postCreateMultipleCustomersAPI = async (req, res) => {
-    let customers = await createMultipleCustomersService(req.body.customers)
-    if (customers) {
-        return res.status(200).json({
-            EC: 0,
-            data: customers,
-        });
-    } else {
-        return res.status(200).json({
-            EC: -1,
-            data: customers,
-        });
-    }
+	let customers = await createMultipleCustomersService(req.body.customers);
+	if (customers) {
+		return res.status(200).json({
+			EC: 0,
+			data: customers,
+		});
+	} else {
+		return res.status(500).json({
+			EC: -1,
+			data: customers,
+		});
+	}
+};
 
+const getAllCustomersAPI = async (req, res) => {
+	const customers = await getAllCustomersService();
+
+    if (customers) {
+		return res.status(200).json({
+			EC: 0,
+			data: customers,
+		});
+	} else {
+		return res.status(500).json({
+			EC: -1,
+			data: customers,
+		});
+	}
 };
 
 module.exports = {
 	postCreateCustomerAPI,
 	postCreateMultipleCustomersAPI,
+	getAllCustomersAPI,
 };

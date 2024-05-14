@@ -29,7 +29,18 @@ const createMultipleCustomersService = async (customerData) => {
 	}
 };
 
+const getAllCustomersService = async () => {
+	try {
+		const result = await Customer.find({});
+		return result;
+	} catch (err) {
+		console.log(err);
+		return null;
+	}
+};
+
 module.exports = {
 	createCustomerService,
-    createMultipleCustomersService
+	createMultipleCustomersService,
+    getAllCustomersService
 };
