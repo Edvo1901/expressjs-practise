@@ -49,7 +49,34 @@ const getAllProjectService = async (queryData) => {
 	}
 };
 
+const putUpdateProjectService = async (data) => {
+	try {
+		const { _id, name, endDate, description } = data;
+		const result = await Project.updateOne(
+			{ _id },
+			{ name, endDate, description }
+		);
+		return result;
+	} catch (err) {
+		console.log(err);
+		return null;
+	}
+};
+
+const deleteProjectService = async (data) => {
+	try {
+		const { _id } = data;
+		const result = await Project.deleteById(_id);
+		return result;
+	} catch (err) {
+		console.log(err);
+		return null;
+	}
+};
+
 module.exports = {
 	postCreateProjectService,
 	getAllProjectService,
+	putUpdateProjectService,
+	deleteProjectService,
 };
