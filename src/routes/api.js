@@ -18,7 +18,10 @@ const {
 	deleteMultipleCustomersAPI,
 } = require("../controllers/customerController");
 
-const { postCreateProjectAPI } = require("../controllers/projectController");
+const {
+	postCreateProjectAPI,
+	getAllProjectAPI,
+} = require("../controllers/projectController");
 
 // User router
 routerAPI.get("/users", getUsersAPI);
@@ -39,6 +42,7 @@ routerAPI.delete("/customers", deleteCustomerAPI);
 routerAPI.post("/customers-many", postCreateMultipleCustomersAPI);
 routerAPI.delete("/customers-many", deleteMultipleCustomersAPI);
 
+routerAPI.get("/projects", getAllProjectAPI);
 routerAPI.post("/projects", postCreateProjectAPI);
 
 routerAPI.get("/info", (req, res) => {

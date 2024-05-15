@@ -1,4 +1,7 @@
-const { postCreateProjectService } = require("../services/projectService");
+const {
+	postCreateProjectService,
+	getAllProjectService,
+} = require("../services/projectService");
 
 const postCreateProjectAPI = async (req, res) => {
 	const result = await postCreateProjectService(req.body);
@@ -9,6 +12,15 @@ const postCreateProjectAPI = async (req, res) => {
 	});
 };
 
+const getAllProjectAPI = async (req, res) => {
+	const result = await getAllProjectService(req.query);
+	return res.status(200).json({
+		EC: 0,
+		data: result,
+	});
+};
+
 module.exports = {
 	postCreateProjectAPI,
+	getAllProjectAPI,
 };
