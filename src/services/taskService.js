@@ -33,10 +33,9 @@ const getAllTaskService = async (queryData) => {
 
 const putUpdateTaskService = async (data) => {
 	try {
-		const { _id, name, endDate, description, status } = data;
 		const result = await Task.updateOne(
 			{ _id },
-			{ name, endDate, description, status }
+			{ ...data}
 		);
 		return result;
 	} catch (err) {
