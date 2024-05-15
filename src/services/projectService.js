@@ -22,6 +22,21 @@ const postCreateProjectService = async (data) => {
 			const result = await myProject.save();
 
 			return result;
+		} else if (data.type === "REMOVE-USERS") {
+			let myProject = await Project.findById(data.projectId).exec();
+
+			for (let i = 0; i < data.usersArr.length; i++) {
+				let userId = data.usersArr[i];
+				if (mongoose.Types.ObjectId.isValid(userId)) {
+					myProject.usersInfor.pull(mongoose.Types.ObjectId(userId));
+				} else {
+					throw new Error(`Invalid ObjectId: ${userId}`);
+				}
+			}
+
+			const result = await myProject.save();
+
+			return result;
 		}
 	} catch (err) {
 		console.log(err);
