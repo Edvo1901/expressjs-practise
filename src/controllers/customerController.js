@@ -10,31 +10,54 @@ const {
 	deleteCustomerService,
 	deleteMultipleCustomersService,
 } = require("../services/customerService");
-
+const Joi = require("joi");
 
 const postCreateCustomerAPI = async (req, res) => {
-	const { name, address, phone, email, image, description } = req.body;
-	let imageURL = "";
+	try {
+		const { name, address, phone, email, description } = req.body;
+		const schema = Joi.object({
+			name: Joi.string().alphanum().min(3).max(30).required(),
+			address: Joi.string(),
+			phone: Joi.string().pattern(new RegExp("^[0-9]{8,11}$")),
+			email: Joi.string().email(),
+			description: Joi.string(),
+		});
 
-	if (req.files || Object.keys(req.files).length > 0) {
-		const result = await uploadSingleFile(req.files.image);
-		imageURL = result.path;
+		try {
+			await schema.validateAsync(req.body, { abortEarly: false });
+		} catch (err) {
+			console.log(err);
+			return res.status(400).json({
+				msg: err.details,
+			});
+		}
+
+		let imageURL = "";
+		if (req.files && Object.keys(req.files).length > 0) {
+			const result = await uploadSingleFile(req.files.image);
+			imageURL = result.path;
+		}
+
+		let customerData = {
+			name,
+			address,
+			phone,
+			email,
+			image: imageURL,
+			description,
+		};
+
+		let customer = await createCustomerService(customerData);
+		return res.status(200).json({
+			EC: 0,
+			data: customer,
+		});
+	} catch (err) {
+		console.error(err);
+		return res.status(500).json({
+			msg: "Internal server error",
+		});
 	}
-
-	let customerData = {
-		name,
-		address,
-		phone,
-		email,
-		image: imageURL,
-		description,
-	};
-
-	let customer = await createCustomerService(customerData);
-	return res.status(200).json({
-		EC: 0,
-		data: customer,
-	});
 };
 
 const postCreateMultipleCustomersAPI = async (req, res) => {
@@ -54,6 +77,7 @@ const postCreateMultipleCustomersAPI = async (req, res) => {
 
 const getAllCustomersAPI = async (req, res) => {
 	const { limit, page, name } = req.query;
+	
 	let customers = null;
 
 	if (limit && page) {
