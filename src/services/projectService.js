@@ -46,16 +46,21 @@ const postCreateProjectService = async (data) => {
 
 const getAllProjectService = async (queryData) => {
 	try {
+		let result = null;
 		const { limit, page } = queryData;
-		const offset = (page - 1) * limit;
-		const { filter, population } = aqp(queryData);
+		if (limit & page) {
+			const offset = (page - 1) * limit;
+			const { filter, population } = aqp(queryData);
 
-		delete filter.page;
-		const result = await Project.find(filter)
-			.populate(population)
-			.skip(offset)
-			.limit(limit)
-			.exec();
+			delete filter.page;
+			result = await Project.find(filter)
+				.populate(population)
+				.skip(offset)
+				.limit(limit)
+				.exec();
+		} else {
+			result = await Project.find({});
+		}
 
 		return result;
 	} catch (err) {
