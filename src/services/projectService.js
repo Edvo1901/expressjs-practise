@@ -48,7 +48,8 @@ const getAllProjectService = async (queryData) => {
 	try {
 		let result = null;
 		const { limit, page } = queryData;
-		if (limit & page) {
+		console.log(limit, page)
+		if (limit && page) {
 			const offset = (page - 1) * limit;
 			const { filter, population } = aqp(queryData);
 
@@ -61,7 +62,6 @@ const getAllProjectService = async (queryData) => {
 		} else {
 			result = await Project.find({});
 		}
-
 		return result;
 	} catch (err) {
 		console.log(err);
