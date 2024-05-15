@@ -18,6 +18,8 @@ const {
 	deleteMultipleCustomersAPI,
 } = require("../controllers/customerController");
 
+const { postCreateProjectAPI } = require("../controllers/projectController");
+
 // User router
 routerAPI.get("/users", getUsersAPI);
 routerAPI.post("/users", postCreateUserAPI);
@@ -37,16 +39,18 @@ routerAPI.delete("/customers", deleteCustomerAPI);
 routerAPI.post("/customers-many", postCreateMultipleCustomersAPI);
 routerAPI.delete("/customers-many", deleteMultipleCustomersAPI);
 
+routerAPI.post("/projects", postCreateProjectAPI);
+
 routerAPI.get("/info", (req, res) => {
 	return res.status(200).json({
-		data: req.query
-	})
-})
+		data: req.query,
+	});
+});
 
 routerAPI.get("/info/:name/:city", (req, res) => {
 	return res.status(200).json({
-		data: req.params
-	})
-})
+		data: req.params,
+	});
+});
 
 module.exports = routerAPI;
